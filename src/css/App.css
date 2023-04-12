@@ -1,0 +1,168 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-image: url(../images/kiosk.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.App {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(../images/kiosk.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.welcome-form {
+  width: 1200px;
+  height: 630px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-top-left-radius: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.right {
+  width: 35%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.left {
+  background: whitesmoke;
+  border-radius: inherit;
+  width: 65%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clip-path: polygon(0% 0%, 50% 0, 100% 50%, 53% 100%, 0% 100%);
+}
+
+.left-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 73%;
+  margin-right: auto;
+}
+
+.left-content > span {
+  color: black;
+  font-size: 2.6rem;
+  text-align: center;
+  font-family: math;
+  font-weight: 600;
+}
+
+.left-content > svg {
+  font-size: 6rem;
+  /* transform: rotate(37deg); */
+}
+
+.btn-backup {
+  width: 75%;
+  height: 25%;
+  background: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 17px;
+  box-shadow: 5px 5px 7px 1px #496070;
+  border: 4px solid #03a9f4;
+  border-style: double;
+  cursor: pointer;
+  transition: all 200ms ease-in;
+}
+
+.btn-backup:hover {
+  border: 4px solid #5eccff;
+}
+
+.btn-backup > svg {
+  font-size: 4rem;
+}
+
+.btn-backup > span {
+  font-family: math;
+  font-size: 2rem;
+}
+
+.btn-restore {
+  width: 75%;
+  height: 25%;
+  background: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 17px;
+  box-shadow: 5px 5px 7px 1px #496070;
+  border: 4px solid #03a9f4;
+  border-style: double;
+  cursor: pointer;
+  transition: all 200ms ease-in;
+}
+
+.btn-restore:hover {
+  border: 4px solid #5eccff;
+}
+
+.btn-restore > svg {
+  font-size: 4rem;
+}
+
+.btn-restore > span {
+  font-family: math;
+  font-size: 2rem;
+}
+
+.form-stepper {
+  display: grid;
+  grid-template-columns: auto 6fr;
+  gap: 9px;
+}
+
+.home-btn {
+  padding: 0 !important;
+}
+
+.home-btn > svg {
+  font-size: 2rem;
+}
+
+.userForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

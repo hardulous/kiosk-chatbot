@@ -1,0 +1,30 @@
+.ship-list-container {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--list);
+  font-weight: var(--list-font-weight);
+}
+
+.ship-list-option {
+  cursor: pointer;
+}
+
+.ship-list-option:hover {
+  color: #2898ec;
+}
+
+.ship-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--list);
+  font-weight: var(--list-font-weight);
+  align-self: flex-start;
+}
+
+.ship-list > span.item:hover , .ship-list > span.more:hover {
+  cursor: pointer;
+  color: #2898ec;
+}

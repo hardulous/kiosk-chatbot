@@ -1,0 +1,233 @@
+/* Bot Btn */
+
+.Kiosk-App {
+  --heading: 0.9rem;
+  --heading-font-weight: 600;
+  --user: 0.8rem;
+  --user-font-weight: 500;
+  --list: 0.8rem;
+  --list-font-weight: 500;
+}
+
+.botBtn {
+  color: #2898ec;
+  background: white !important;
+  position: fixed !important;
+  right: 4%;
+  bottom: 5%;
+  transition-property: transform !important;
+}
+
+.botBtn:hover {
+  transform: scale(1.3);
+}
+
+/* Bot Header */
+
+.botContainer {
+  width: 100%;
+  height: 500px;
+  box-shadow: 0px 0px 3px 2px #80808073;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.botHeader {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: auto 2fr auto;
+  gap: 14px;
+  border-bottom: 1px solid #8080804a;
+  border-radius: inherit;
+  background: white;
+}
+
+.botHeader .botheader-icon {
+  background: #2898ec;
+  color: white;
+  pointer-events: none;
+}
+
+.botHeader .botHeader-badge > span {
+  background-color: #39ed07;
+}
+
+.botHeader > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.botHeader > div span {
+  font-family: var(--font);
+}
+
+/* Bot Body */
+
+.botBody {
+  padding: 0 17.5px 10px 17.5px;
+  height: 424px;
+  overflow: auto;
+  background-color: rgb(234, 238, 243);
+  border-bottom: 1px solid #8080804a;
+}
+
+.botAvatar {
+  background-color: #2898ec !important;
+  align-self: start;
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.bot-message-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.botMessage {
+  width: auto;
+  background: white;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 13px;
+  border-bottom-right-radius: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 15px;
+  margin-top: 9px;
+}
+
+.botMessage > span {
+  text-align: justify;
+  font-weight: var(--heading-font-weight);
+  font-size: var(--heading);
+  white-space: pre-line;
+}
+
+.user-message-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.userMessage {
+  width: auto;
+  background: #2898ec;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 13px;
+  border-bottom-left-radius: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  margin-top: 9px;
+}
+
+.userMessage > span {
+  text-align: justify;
+  font-size: var(--user);
+  font-weight: var(--user-font-weight);
+  color: white;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#dots #dot1 {
+  animation: load 1s infinite;
+  fill: #2898ec;
+}
+
+#dots #dot2 {
+  animation: load 1s infinite;
+  animation-delay: 0.2s;
+  fill: #2898ec;
+}
+
+#dots #dot3 {
+  animation: load 1s infinite;
+  animation-delay: 0.4s;
+  fill: #2898ec;
+}
+
+@keyframes load {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.botBody::-webkit-scrollbar {
+  width: 5px;
+}
+
+.botBody::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+}
+
+.botBody::-webkit-scrollbar-thumb {
+  background: #2897ec81;
+  border-radius: 10px;
+}
+
+.botBody::-webkit-scrollbar-thumb:hover {
+  background: #2898ec;
+}
+
+/* Bot User Input */
+
+.BotInput > form {
+  display: grid;
+  grid-template-columns: 6fr 3rem;
+  gap: 10px;
+  align-items: center;
+}
+
+.bot-user-input .MuiOutlinedInput-root {
+  border-radius: 0 !important;
+  background-color: white;
+}
+
+.bot-user-input .MuiOutlinedInput-root > fieldset {
+  border-radius: 0px 25px 25px 0px;
+}
+
+.bot-input-send-btn {
+  background-color: #2898ec !important;
+  padding: 0px !important;
+  color: white !important;
+  border-radius: 20px !important;
+  width: 36px;
+  height: 36px;
+}
+
+.bot-input-send-btn.Mui-disabled {
+  background-color: #2897ec80 !important;
+}
+
+.more {
+  font-weight: var(--heading-font-weight);
+  font-size: var(--heading);
+  color: #2898ec;
+}
+
+/* Bot Validate Input */
+
+.valid {
+  color: #ff0000b5;
+  align-self: flex-start;
+}
