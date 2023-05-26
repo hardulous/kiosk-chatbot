@@ -49,6 +49,22 @@ app.commandLine.appendSwitch("no-sandbox");
 // });
 
 app.on("ready", () => {
+
+  console.log(app.getAppPath());
+  const distPath = path.join(app.getAppPath(), "dist");
+
+  // Get the path to the output.txt file
+  const outputPath = path.join(distPath, "output.txt");
+  
+  console.log(outputPath)
+  
+  // Check if the file exists
+  if (fs.existsSync(outputPath)) {
+    console.log("output.txt exists");
+  } else {
+    console.log("output.txt does not exist");
+  }
+
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
   let ipcWin = createWindow(width, height);
 
