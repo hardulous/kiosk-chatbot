@@ -46,6 +46,11 @@ export const KioskProvider = ({ children }) => {
   // State to show error in chat bot
   const [error, seterror] = useState(false);
 
+  // State to know mode of process
+  const [mode, setMode] = useState("");
+
+  console.log(mode);
+
   let uuid1 = uuidv4();
   let uuid2 = uuidv4();
 
@@ -86,8 +91,8 @@ export const KioskProvider = ({ children }) => {
   }, [isBackup]);
 
   useEffect(() => {
-    if (cinNo && userId && svPassword && Ship && sysDetail && mmd) {
-      if (isBackup) {
+    if (cinNo && userId && svPassword && Ship && sysDetail && mmd && mode) {
+      if (isBackup && mode === "dd") {
         ipcRenderer.send(
           "start-backup-sh",
           cinNo,
@@ -97,7 +102,7 @@ export const KioskProvider = ({ children }) => {
           sysDetail,
           mmd
         );
-      } else {
+      } else if (mode === "dd") {
         ipcRenderer.send(
           "start-extract-sh",
           cinNo,
@@ -107,9 +112,29 @@ export const KioskProvider = ({ children }) => {
           sysDetail,
           mmd
         );
+      } else if (isBackup && mode === "clonezilla") {
+        ipcRenderer.send(
+          "start-backup-clonezilla",
+          cinNo,
+          userId,
+          svPassword,
+          Ship,
+          sysDetail,
+          mmd
+        );
+      } else if (mode === "clonezilla") {
+        ipcRenderer.send(
+          "start-extract-clonezilla",
+          cinNo,
+          userId,
+          svPassword,
+          Ship,
+          sysDetail,
+          mmd
+        );
       }
     }
-  }, [cinNo, userId, svPassword, Ship, sysDetail, mmd]);
+  }, [cinNo, userId, svPassword, Ship, sysDetail, mmd, mode]);
 
   useEffect(() => {
     if (msg) {
@@ -833,6 +858,8 @@ export const KioskProvider = ({ children }) => {
         inputMmd,
         error,
         seterror,
+        mode,
+        setMode,
         hardReload,
       }}
     >

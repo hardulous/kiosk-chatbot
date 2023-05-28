@@ -49,15 +49,14 @@ app.commandLine.appendSwitch("no-sandbox");
 // });
 
 app.on("ready", () => {
-
   console.log(app.getAppPath());
   const distPath = path.join(app.getAppPath(), "dist");
 
   // Get the path to the output.txt file
   const outputPath = path.join(distPath, "output.txt");
-  
-  console.log(outputPath)
-  
+
+  console.log(outputPath);
+
   // Check if the file exists
   if (fs.existsSync(outputPath)) {
     console.log("output.txt exists");
@@ -121,12 +120,7 @@ app.on("ready", () => {
   ipcMain.on(
     "start-backup-sh",
     (event, cin, userId, password, ship, sysDetail, mmd) => {
-      const shellFile1 = path.join(
-        app.getAppPath(),
-        "build",
-        "sh",
-        "bKoiskDD.sh"
-      );
+      const shellFile1 = path.join(app.getAppPath(), "build", "bKoiskDD.sh");
       const tempJarPath1 = path.join(os.homedir(), "bKoiskDD.sh");
       fs.copyFileSync(shellFile1, tempJarPath1);
 
@@ -157,12 +151,7 @@ app.on("ready", () => {
         outputFileStream.write(`40\n`);
         ipcWin.webContents.send("backup-progress", 40);
 
-        const shellFile2 = path.join(
-          app.getAppPath(),
-          "build",
-          "sh",
-          "bKoisk2.sh"
-        );
+        const shellFile2 = path.join(app.getAppPath(), "build", "bKoisk2.sh");
         const tempJarPath2 = path.join(os.homedir(), "bKoisk2.sh");
         fs.copyFileSync(shellFile2, tempJarPath2);
 
@@ -177,12 +166,7 @@ app.on("ready", () => {
           outputFileStream.write(`20\n`);
           ipcWin.webContents.send("backup-progress", 20);
 
-          const shellFile3 = path.join(
-            app.getAppPath(),
-            "build",
-            "sh",
-            "bKoisk3.sh"
-          );
+          const shellFile3 = path.join(app.getAppPath(), "build", "bKoisk3.sh");
           const tempJarPath3 = path.join(os.homedir(), "bKoisk3.sh");
           fs.copyFileSync(shellFile3, tempJarPath3);
 
@@ -273,6 +257,176 @@ app.on("ready", () => {
             app.getAppPath(),
             "build",
             "sh",
+            "extKoisk3.sh"
+          );
+          const tempJarPath3 = path.join(os.homedir(), "extKoisk3.sh");
+          fs.copyFileSync(shellFile3, tempJarPath3);
+
+          exec(`${tempJarPath3} ${args}`, (error, stdout, stderr) => {
+            if (error) {
+              console.error(`Failed to execute command: ${error.message}`);
+              return;
+            }
+            console.log(`stdout: stdout: restore-3`);
+
+            outputFileStream.write(`40\n`);
+            outputFileStream.end();
+            ipcWin.webContents.send("extract-progress", 40);
+
+            console.error(`stderr: ${stderr}`);
+          });
+
+          console.error(`stderr: ${stderr}`);
+        });
+
+        console.error(`stderr: ${stderr}`);
+      });
+      ipcWin.webContents.send("connection-extract-sh", true);
+    }
+  );
+
+  // Event for clonezilla file of backup
+  ipcMain.on(
+    "start-backup-clonezilla",
+    (event, cin, userId, password, ship, sysDetail, mmd) => {
+      const shellFile1 = path.join(app.getAppPath(), "build", "bKoiskDD.sh");
+      const tempJarPath1 = path.join(os.homedir(), "bKoiskDD.sh");
+      fs.copyFileSync(shellFile1, tempJarPath1);
+
+      const isWindows = process.platform === "win32";
+      const shell = isWindows ? "cmd.exe" : "/bin/sh";
+
+      console.log(cin, userId, password, ship, sysDetail, mmd);
+
+      const args = `"${cin}" "${userId}" "${password}" "${ship}" "${sysDetail}" "${mmd}"`;
+
+      // check whether output directory exist or not
+      if (!fs.existsSync(`${os.homedir}/output`)) {
+        fs.mkdirSync(`${os.homedir}/output`);
+      }
+
+      const outputFileStream = fs.createWriteStream(
+        `${os.homedir}/output/${userId}-backup.txt`,
+        { flags: "a" }
+      );
+
+      const fileStream = fs.createReadStream(
+        `${os.homedir}/output/${userId}-backup.txt`,
+        {
+          encoding: "utf-8",
+        }
+      );
+
+      exec(`${tempJarPath1} ${args}`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Failed to execute command: ${error.message}`);
+          return;
+        }
+        console.log(`stdout: ${stdout}`);
+
+        outputFileStream.write(stdout);
+        ipcWin.webContents.send("backup-progress", 40);
+
+        const shellFile2 = path.join(app.getAppPath(), "build", "bKoisk2.sh");
+        const tempJarPath2 = path.join(os.homedir(), "bKoisk2.sh");
+        fs.copyFileSync(shellFile2, tempJarPath2);
+
+        exec(`${tempJarPath2} ${args}`, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`Failed to execute command: ${error.message}`);
+            return;
+          }
+
+          console.log(`stdout: ${stdout}`);
+
+          outputFileStream.write(stdout);
+          ipcWin.webContents.send("backup-progress", 20);
+
+          const shellFile3 = path.join(app.getAppPath(), "build", "bKoisk3.sh");
+          const tempJarPath3 = path.join(os.homedir(), "bKoisk3.sh");
+          fs.copyFileSync(shellFile3, tempJarPath3);
+
+          exec(`${tempJarPath3} ${args}`, (error, stdout, stderr) => {
+            if (error) {
+              console.error(`Failed to execute command: ${error.message}`);
+              return;
+            }
+            console.log(`stdout: ${stdout}`);
+            outputFileStream.write(stdout);
+            outputFileStream.end();
+            ipcWin.webContents.send("backup-progress", 40);
+            console.error(`stderr: ${stderr}`);
+
+            fileStream.on("data", (chunk) => {
+              console.log(chunk);
+              ipcWin.webContents.send("clonezilla-log", chunk);
+            });
+          });
+
+          console.error(`stderr: ${stderr}`);
+        });
+
+        console.error(`stderr: ${stderr}`);
+      });
+      ipcWin.webContents.send("connection-backup-sh", true);
+    }
+  );
+
+  // Event for clonezilla file of extract
+  ipcMain.on(
+    "start-extract-clonezilla",
+    (event, cin, userId, password, ship, sysDetail, mmd) => {
+      let output = "";
+      let shellProcess;
+      const shellFile1 = path.join(app.getAppPath(), "build", "extKoiskDD.sh");
+      const tempJarPath1 = path.join(os.homedir(), "extKoiskDD.sh");
+      fs.copyFileSync(shellFile1, tempJarPath1);
+
+      const isWindows = process.platform === "win32";
+      const shell = isWindows ? "cmd.exe" : "/bin/sh";
+
+      console.log(cin, userId, password, ship, sysDetail, mmd);
+
+      const args = `"${cin}" "${userId}" "${password}" "${ship}" "${sysDetail}" "${mmd}"`;
+
+      // check whether output directory exist or not
+      if (!fs.existsSync(`${os.homedir}/output`)) {
+        fs.mkdirSync(`${os.homedir}/output`);
+      }
+
+      const outputFileStream = fs.createWriteStream(
+        `${os.homedir}/output/${userId}-output.txt`,
+        { flags: "a" }
+      );
+
+      exec(`${tempJarPath1} ${args}`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Failed to execute command: ${error.message}`);
+          return;
+        }
+        console.log(`stdout: restore-1`);
+
+        outputFileStream.write(`40\n`);
+        ipcWin.webContents.send("extract-progress", 40);
+
+        const shellFile2 = path.join(app.getAppPath(), "build", "extKoisk2.sh");
+        const tempJarPath2 = path.join(os.homedir(), "extKoisk2.sh");
+        fs.copyFileSync(shellFile2, tempJarPath2);
+
+        exec(`${tempJarPath2} ${args}`, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`Failed to execute command: ${error.message}`);
+            return;
+          }
+
+          console.log(`stdout: stdout: restore-2`);
+
+          outputFileStream.write(`20\n`);
+          ipcWin.webContents.send("extract-progress", 20);
+
+          const shellFile3 = path.join(
+            app.getAppPath(),
+            "build",
             "extKoisk3.sh"
           );
           const tempJarPath3 = path.join(os.homedir(), "extKoisk3.sh");

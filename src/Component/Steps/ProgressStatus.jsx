@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Alert, AlertTitle, Button } from "@mui/material";
+import { Alert, AlertTitle, Button, Collapse } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { kioskContext } from "../../Util/KioskContext";
+import { useEffect, useState, useContext } from "react";
 const { ipcRenderer } = window;
 
 function LinearProgressWithLabel(props) {
@@ -32,20 +33,16 @@ LinearProgressWithLabel.propTypes = {
 };
 
 export default function LinearWithValueLabel() {
-  const [progress, setProgress] = React.useState(0);
+  const [progress, setProgress] = useState(0);
+  const [logs, setlogs] = useState("");
+
   const navigate = useNavigate();
-  const { connection, start, handleReset, isBackup } =
-    React.useContext(kioskContext);
+  const { connection, start, handleReset, isBackup, mode } =
+    useContext(kioskContext);
 
-  React.useEffect(() => {
-    ipcRenderer.on("backup-progress", (event, val) => {
-      setProgress((prevProgress) => prevProgress + val);
-    });
-
-    ipcRenderer.on("extract-progress", (event, val) => {
-      setProgress((prevProgress) => prevProgress + val);
-    });
-  }, []);
+  useEffect(() => {
+    handleShExecute();
+  }, [mode]);
 
   React.useEffect(() => {
     if (!connection && !start) {
@@ -53,6 +50,22 @@ export default function LinearWithValueLabel() {
       navigate("/");
     }
   }, [connection]);
+
+  const handleShExecute = () => {
+    ipcRenderer.on("backup-progress", (event, val) => {
+      setProgress((prevProgress) => prevProgress + val);
+    });
+
+    ipcRenderer.on("extract-progress", (event, val) => {
+      setProgress((prevProgress) => prevProgress + val);
+    });
+
+    ipcRenderer.on("clonezilla-log", (event, val) => {
+      console.log(val);
+      setlogs((text) => text + val);
+    });
+  };
+  console.log(logs);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -63,6 +76,11 @@ export default function LinearWithValueLabel() {
           <Alert severity="success">
             <AlertTitle>Task completed Successfully</AlertTitle>
           </Alert>
+
+          <Collapse className="logs-screen" in={Boolean(logs)}>
+            {logs}
+          </Collapse>
+
           <div style={{ marginTop: "1.5rem" }}>
             <Link to="/" style={{ textDecoration: "none" }}>
               <Button variant="contained" onClick={handleReset}>

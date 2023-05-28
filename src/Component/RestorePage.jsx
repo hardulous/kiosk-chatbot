@@ -14,11 +14,13 @@ import { kioskContext } from "../Util/KioskContext";
 import { useContext } from "react";
 import { Home } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import ProcessMode from "./Steps/ProcessMode";
 const { ipcRenderer } = window;
 
 function getSteps() {
   return [
     "Fill The Necessary Details",
+    "Mode Of Extraction",
     "Approval of Supervisor",
     "Start Extraction Process",
   ];
@@ -30,8 +32,10 @@ export default function ActiveStep() {
       case 0:
         return <MMDForm handleNext={handleNext} />;
       case 1:
-        return <ApprovalForm handleNext={handleNext} />;
+        return <ProcessMode handleNext={handleNext} />;
       case 2:
+        return <ApprovalForm handleNext={handleNext} />;
+      case 3:
         return <ProgressStatus handleNext={handleNext} />;
       default:
         return "";
