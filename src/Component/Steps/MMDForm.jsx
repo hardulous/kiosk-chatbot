@@ -70,6 +70,7 @@ const MMDForm = (props) => {
           ];
           output.shift();
           output.pop();
+          console.log(output)
           handleMessages("bot", output, "shipList");
         }
         if (res.includes("ShipSystems,")) {

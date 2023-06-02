@@ -77,7 +77,10 @@ export default function LinearWithValueLabel() {
             <AlertTitle>Task completed Successfully</AlertTitle>
           </Alert>
 
-          <Collapse className="logs-screen" in={Boolean(logs)}>
+          <Collapse
+            className={`${Boolean(logs) ? "logs-screen" : "logs-screen-hide"}`}
+            in={Boolean(logs)}
+          >
             {logs}
           </Collapse>
 

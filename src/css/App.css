@@ -74,7 +74,7 @@ code {
   margin-right: auto;
 }
 
-.left-content>span {
+.left-content > span {
   color: black;
   font-size: 2.6rem;
   text-align: center;
@@ -82,7 +82,7 @@ code {
   font-weight: 600;
 }
 
-.left-content>svg {
+.left-content > svg {
   font-size: 6rem;
   /* transform: rotate(37deg); */
 }
@@ -107,11 +107,11 @@ code {
   border: 4px solid #5eccff;
 }
 
-.btn-backup>svg {
+.btn-backup > svg {
   font-size: 4rem;
 }
 
-.btn-backup>span {
+.btn-backup > span {
   font-family: math;
   font-size: 2rem;
 }
@@ -136,11 +136,11 @@ code {
   border: 4px solid #5eccff;
 }
 
-.btn-restore>svg {
+.btn-restore > svg {
   font-size: 4rem;
 }
 
-.btn-restore>span {
+.btn-restore > span {
   font-family: math;
   font-size: 2rem;
 }
@@ -155,7 +155,7 @@ code {
   padding: 0 !important;
 }
 
-.home-btn>svg {
+.home-btn > svg {
   font-size: 2rem;
 }
 
@@ -173,7 +173,7 @@ code {
   gap: 12px;
 }
 
-.process-mode-con>button {
+.process-mode-con > button {
   align-self: flex-end;
 }
 
@@ -181,21 +181,24 @@ code {
   width: 100%;
 }
 
-.process-mode>.MuiFormGroup-root {
+.process-mode > .MuiFormGroup-root {
   justify-content: space-around;
 }
 
-.logs-screen{
-   height: 300px !important;
-   overflow: auto !important;
-   margin: 10px 0px;
-   height: 300px !important;
-   overflow: auto !important;
-   margin: 6px 0px;
-   border: 1px solid #80808085;
-   padding: 10px;
-   background: rgb(211 47 47 / 4%);
-   text-align: justify;
-   font-size: 1rem;
-   font-weight: 600;
+.logs-screen {
+  height: 300px !important;
+  overflow: auto !important;
+  margin: 10px 0px;
+  border: 1px solid #80808085;
+  padding: 10px;
+  background: rgb(211 47 47 / 4%);
+  text-align: justify;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.logs-screen-hide {
+  height: 0 !important;
+  margin: 0;
+  padding: 0;
 }

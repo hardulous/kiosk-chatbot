@@ -200,7 +200,7 @@ app.on("ready", () => {
       const shellFile1 = path.join(
         app.getAppPath(),
         "build",
-        "sh",
+
         "extKoiskDD.sh"
       );
       const tempJarPath1 = path.join(os.homedir(), "extKoiskDD.sh");
@@ -236,7 +236,7 @@ app.on("ready", () => {
         const shellFile2 = path.join(
           app.getAppPath(),
           "build",
-          "sh",
+
           "extKoisk2.sh"
         );
         const tempJarPath2 = path.join(os.homedir(), "extKoisk2.sh");
@@ -256,7 +256,7 @@ app.on("ready", () => {
           const shellFile3 = path.join(
             app.getAppPath(),
             "build",
-            "sh",
+
             "extKoisk3.sh"
           );
           const tempJarPath3 = path.join(os.homedir(), "extKoisk3.sh");
@@ -310,13 +310,6 @@ app.on("ready", () => {
         { flags: "a" }
       );
 
-      const fileStream = fs.createReadStream(
-        `${os.homedir}/output/${userId}-backup.txt`,
-        {
-          encoding: "utf-8",
-        }
-      );
-
       exec(`${tempJarPath1} ${args}`, (error, stdout, stderr) => {
         if (error) {
           console.error(`Failed to execute command: ${error.message}`);
@@ -357,6 +350,14 @@ app.on("ready", () => {
             ipcWin.webContents.send("backup-progress", 40);
             console.error(`stderr: ${stderr}`);
 
+            // Read clonezilla output logs
+            const fileStream = fs.createReadStream(
+              `${os.homedir}/output/${userId}-backup.txt`,
+              {
+                encoding: "utf-8",
+              }
+            );
+
             fileStream.on("data", (chunk) => {
               console.log(chunk);
               ipcWin.webContents.send("clonezilla-log", chunk);
@@ -395,7 +396,7 @@ app.on("ready", () => {
       }
 
       const outputFileStream = fs.createWriteStream(
-        `${os.homedir}/output/${userId}-output.txt`,
+        `${os.homedir}/output/${userId}-extract.txt`,
         { flags: "a" }
       );
 
@@ -442,6 +443,19 @@ app.on("ready", () => {
             outputFileStream.write(`40\n`);
             outputFileStream.end();
             ipcWin.webContents.send("extract-progress", 40);
+
+            // Read clonezilla output logs
+            const fileStream = fs.createReadStream(
+              `${os.homedir}/output/${userId}-extract.txt`,
+              {
+                encoding: "utf-8",
+              }
+            );
+
+            fileStream.on("data", (chunk) => {
+              console.log(chunk);
+              ipcWin.webContents.send("clonezilla-log", chunk);
+            });
 
             console.error(`stderr: ${stderr}`);
           });
